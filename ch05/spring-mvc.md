@@ -111,13 +111,88 @@
 - View : 컨트롤러의 처리 결과 화면을 생성, 템플릿 파일 등을 뷰로 사용
 
 
+### 예시를 통한 실습
+
+### 📂HelloViewController
+```java
+package com.example.MVC_SAMPLE.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+@Controller 
+@RequestMapping("hello")
+public class HelloViewController {
+    @GetMapping("view")
+    public String helloView(){
+        return "hello";
+    }
+    
+}
+```
+
+### 📂hello.html
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>View Sample</title>
+</head>
+<body>
+
+  <h1>Hello View!</h1>
+
+
+</body>
+</html>
+```
+
+
+위 코드를 통해서 간단한 Spring MVC를 사용해보았다. 각 코드에 대해서 뜯어보자.
+
+
+### HelloViewController
+
+이름처럼 컨트롤러 부분이다. 이렇게 생긴 클래스를 POJO 클래스라고 한다. 
+
+> POJO(Plain Old Java Object) 의 줄인 말으로, 특별한 제한에 종속되지 않고, 클래스 패스를 필요로 하지 않는 일반적인 Java Object 를 의미한다. 간단히 말하면, 주요 Java 오브젝트 모델, 컨벤션 또는 프레임워크를 따르지 않는 Java 오브젝트 이다.
+
+즉, 어떤 클래스를 상속하는 등의 특별한 처리를 하지 않는 클래스이다.
+
+- @Controller : 앞서 말했던 Controller에 해당하는 Bean을 만들기 위한 어노테이션이다. 그리고 클라이언트와 데이터 입출력을 제어하는 애플리케이션 레이어의 컨트롤러를 부여하여 `요청 핸들러 메서드`(담당 컨트롤러 찾는 친구)의 반환 값을 뷰 이름으로 해서 응답 HTML을 생성한다.
+- @RequestMapping : 요청 핸들러 메서드와 URL을 매핑시킨다. 즉 해당하는 URL로 요청을 보내면 이쪽의 컨트롤러로 오도록 유도하는 친구이다.
+  - 속성
+    - value : 매핑할 URL 경로이다. 
+    - method : http 메서드를 넣으면 된다. 
+
+- @xxxMapping
+  - xxx: HTTP 메서드이다. 이것을 어찌보면 @RequestMapping("hello", method=RequestMethod.GET)과 같은 것이다.
+
+
+그래서 코드를 실행하면 `localhost:포트/hello/view` 로 요청을 하면 `template/hello.html`이라는 친구를 찾으러 갈 것이다.
+
+
+### hello.html
+
+해당 코드에서는 그냥 Hello View!!를 표현하기 위한 뷰이다.
 
 
 
+### 흐름 정리
+
+위의 예시의 코드는 다음과 같은 과정을 거친 것이다.
 
 
-
-
+1. GET 으로 URL : hello/view 로 요청이 왔다.
+2. 앞의 DispatcherServlet을 통해서 한 번 보고 HandlerMapping쪽으로 이동
+3. 해당하는 요청에 맞는 컨트롤러를 요청 핸들러 메서드(helloView)를 실행하고 뷰 반환
+5. 지지고 볶고 해서 -> hello 라는 뷰를 찾아야함.
+6. viewResolver를 통해서 template 폴더에 있는 hello.html 뷰를 결정 하고 사용
+7. 클라이언트에게 화면에 뷰 화면 출력
 
 
 
@@ -125,3 +200,4 @@
 
 - https://www.tutorialspoint.com/mvc_framework/mvc_framework_introduction.htm
 - https://www.javatpoint.com/spring-mvc-tutorial
+- 
