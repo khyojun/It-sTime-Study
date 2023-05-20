@@ -75,6 +75,12 @@ Model addAttribute(String name, Object value)
 
 이런 경우처럼 그냥 "" 안에 값을 넣어서 표시할 수도 있고 타임리프의 독자적인 문법인 `${}`를 사용하여 안에 아까 핸들러 메서드에서 넘어온 model같은 값을 넣어서 사용할 수 있다.
 
+### th:text vs th:utext
+
+Sanitize라는 부분에서 차이가 있다.
+
+>Sanitize: 
+
 ### 인라인 처리
 
 ```html
